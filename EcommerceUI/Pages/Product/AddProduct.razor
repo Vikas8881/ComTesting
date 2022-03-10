@@ -1,0 +1,82 @@
+﻿@page "/Product/addProduct"
+
+@using EcommerceWeb.Services.Base
+@using EcommerceWeb.Services.CategoryService
+@using EcommerceWeb.Services.Product
+@using Syncfusion.Blazor.DropDowns
+@using Syncfusion.Blazor.Inputs
+@inject IProduct proudctService
+@inject ICategory categoryService
+@inject ToastService ToastService
+
+<Title>Category</Title>
+
+<Toast></Toast>
+<GroupBox Title="Add New Product" style="margin-top: 1.5rem;">
+	<ValidateForm Model="@productCreateDTO" OnValidSubmit=@HandelCreate>
+		   <DataAnnotationsValidator />
+ 
+	<div class="row g-3">
+		<div class="col-6">
+				<div class="row g-3">
+			<div class="col-12">
+        <BootstrapInput @bind-Value="@productCreateDTO.Product_Name" DisplayText="Product Name" PlaceHolder="Product Name"/>
+			</div>
+				<div class="col-12">
+        <BootstrapInput @bind-Value="@productCreateDTO.Unit" DisplayText="Unit" PlaceHolder="Unit (e.g KG, Pc etc)"/>
+			</div>
+				<div class="col-12">
+        <BootstrapInput @bind-Value="@productCreateDTO.Minimum_Purchase" DisplayText="Minimum Purchase Qty" PlaceHolder="Minimum Purchase Qty"/>
+			</div>
+			<div class="col-12">
+        <BootstrapInput @bind-Value="@productCreateDTO.Tags" DisplayText="Tags" PlaceHolder="Tags"/>
+			</div>
+			<div class="col-12">
+		<Switch OnColor="Color.Success" OffColor="Color.Danger" OnText="On" OffText="Off" @bind-Value="@productCreateDTO.Refundable" DisplayText="Refundable" ShowLabel="true"></Switch>
+			</div>
+				<div class="col-12">
+  <Textarea placeholder="Please enter ..." rows="5" @bind-Value="@productCreateDTO.Product_Description" DisplayText="Description"></Textarea>
+			</div>
+		</div>
+		</div>
+		<div class="col-6">
+			<div class="row g-3">
+				<div class=col-12>
+					 <CardUpload  @bind-Value="@productCreateDTO.Thumbnail" IsSingle="true" OnChange="OnAvatarUpload" ShowProgress="true" ShowLabel="true" DisplayText="Choose Thumbnail"/> 
+				</div>
+					<div class=col-12>
+					 <BootstrapInput @bind-Value="@productCreateDTO.Product_Code" DisplayText="Product Code" PlaceHolder="Product Code"/>
+				</div>
+				<div class=col-12>
+					 <BootstrapInput @bind-Value="@productCreateDTO.Purchase_Price" DisplayText="Purchase Price" PlaceHolder="Purchase Price"/>
+				</div>
+					<div class=col-12>
+					 <BootstrapInput @bind-Value="@productCreateDTO.Sale_Price" DisplayText="Sale Price" PlaceHolder="Sale Price"/>
+				</div>
+					<div class=col-12>
+					 <BootstrapInput @bind-Value="@productCreateDTO.Old_Price" DisplayText="Old Price" PlaceHolder="Old Price if Available"/>
+				</div>
+					<div class=col-12>
+					 <BootstrapInput @bind-Value="@productCreateDTO.Minimum_Stock" DisplayText="Minimum Stock" PlaceHolder="Minimum Stock"/>
+				</div>
+					<div class="col-12">
+			     <SfComboBox  TValue="string" Placeholder="Choose Category" TItem="CategoryReadDTO" DataSource="@categorylist" 
+				 AllowCustom="false" AllowFiltering="true" CssClass="e-outline"
+                 FloatLabelType="@FloatLabelType.Always" @bind-Value="@productCreateDTO.Cat_ID">
+                <ComboBoxFieldSettings Text="Name" Value="Id"></ComboBoxFieldSettings>
+            </SfComboBox>
+			
+			</div>
+           </div>
+		</div>
+	</div>
+	
+		 <div class="row g-3">
+      <div class="col-12" style="text-align:center">
+          <br />
+
+			<Button ButtonType="@ButtonType.Submit" Text="Submit" IsAsync="true" Icon="fa fa-fw fa-fa"/>
+      </div>
+  </div>
+	</ValidateForm>
+</GroupBox>

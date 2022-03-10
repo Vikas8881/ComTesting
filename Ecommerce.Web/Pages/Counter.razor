@@ -1,0 +1,58 @@
+﻿@page "/Products/counter/"
+
+@inject IProduct proudctService
+@inject ICategory categoryService
+@inject ToastService ToastService
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+<Toast></Toast>
+
+<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+  	<Button ButtonType="@ButtonType.Submit" Text="Get Data" IsAsync="true" Icon="fa fa-fw fa-fa" OnClick=@GetData/>
+
+@code {
+	[NotNull]
+	private Toast? Toast { get; set; }
+	private ProductCreateDTO productCreateDTO = new ProductCreateDTO();
+	private List<CategoryReadDTO> categorylist { get; set; } = new List<CategoryReadDTO>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		
+	}
+	private async Task GetData()
+	{
+		var response = await categoryService.GetCategory();
+		if (response.Success)
+		{
+			categorylist = response.Data;
+		}
+	}
+	private async Task HandelCreate(EditContext context)
+        {
+            var response = await proudctService.CreateProduct(productCreateDTO);
+
+
+            if (response.Success)
+            {
+                await ToastService.Show(new ToastOption()
+                {
+                    IsAutoHide = true,
+                    Category = ToastCategory.Success,
+                    Title = "Saved Successfully",
+                    Content = "Data Saved Successfully"
+                });
+            }
+        }
+	
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+}
