@@ -12,6 +12,6 @@ namespace Ecommerce.DTOs.Product
         [Column("Product Price")]
         public int? Product_Price { get; set; }
         public int? Quantity { get; set; }
-        public int? Cat_ID { get; set; }
+        public string? Cat_ID { get; set; }
     }
 }

@@ -28,7 +28,7 @@ namespace EcommerceWeb.Shared
         {
             base.OnInitialized();
 
-            Menus = GetIconSideMenuItems();
+            //Menus = GetIconSideMenuItems();
         }
 
         private static List<MenuItem> GetIconSideMenuItems()

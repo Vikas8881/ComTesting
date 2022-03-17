@@ -54,30 +54,51 @@ namespace Ecommerce.Controllers
             }
            
         }
-
+        
         // GET: api/Products/5
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<ProductDetailsDTO>> GetProduct(int id)
+        //{
+        //    logger.LogInformation($"Request to {nameof(GetProduct)}");
+        //    try
+        //    {
+        //        var products = await _context.Products.ProjectTo<ProductDetailsDTO>
+        //        (mapper.ConfigurationProvider).FirstOrDefaultAsync(a=>a.ID == id);
+        //        if(products == null)
+        //        {
+        //            logger.LogWarning($"Record Not Found: {nameof(GetProduct)}");
+        //            return NotFound();
+        //        }
+        //        logger.LogWarning($"Successfully Get Record: {nameof(GetProduct)}");
+        //        return Ok(products);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        logger.LogError(e, $" Error Performing GET in {nameof(GetProduct)}");
+        //        return StatusCode(500, Messages.Error500Message);
+        //    }
+        //}
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductDetailsDTO>> GetProduct(int id)
-        {logger.LogInformation($"Request to {nameof(GetProduct)}");
+        {
+            logger.LogInformation($"Request to {nameof(GetProduct)}");
             try
             {
-                var products = await _context.Products.ProjectTo<ProductDetailsDTO>
-                    (mapper.ConfigurationProvider).FirstOrDefaultAsync(a=>a.ID == id);
-                if(products == null)
+                var products = await _context.Products.ProjectTo<ProductDetailsDTO>(mapper.ConfigurationProvider).FirstOrDefaultAsync(a => a.ID == id);
+
+                if (products == null)
                 {
-                    logger.LogWarning($"Record Not Found: {nameof(GetProduct)}");
+                    logger.LogWarning($"Record not found:{nameof(GetProduct)}");
                     return NotFound();
                 }
-                logger.LogWarning($"Successfully Get Record: {nameof(GetProduct)}");
-             return Ok(products);
+                return products;
             }
             catch (Exception e)
             {
                 logger.LogError(e, $" Error Performing GET in {nameof(GetProduct)}");
                 return StatusCode(500, Messages.Error500Message);
             }
-            
-          
+
         }
 
         // PUT: api/Products/5
@@ -177,5 +198,12 @@ namespace Ecommerce.Controllers
         {
             return await _context.Products.AnyAsync(e => e.Id == id);
         }
+        //Loading Data from Store Procedure 
+        [HttpGet("ViewAddImages/{ID:int}")]
+        public async Task<IEnumerable<SP_GetViewimageRecordResult>> productForAddImages(int? ID)
+        {
+            return await _context.GetProcedures().SP_GetViewimageRecordAsync(ID);
+        }
+
     }
 }

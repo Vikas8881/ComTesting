@@ -28,7 +28,7 @@ namespace Ecommerce.Model
         public int? Sale_Price { get; set; }
         [Column("Old Price")]
         public int? Old_Price { get; set; }
-        public int? Cat_ID { get; set; }
+        public string Cat_ID { get; set; }
         [Column("Product Code")]
         [StringLength(50)]
         public string Product_Code { get; set; }

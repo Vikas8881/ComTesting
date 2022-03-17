@@ -24,6 +24,10 @@
       {
          "Name": "[dbo].[Product Image]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[SP_GetViewimageRecord]",
+         "ObjectType": 1
       }
    ],
    "UiHint": "VIKAS\\VIKAS.Ecommerce",

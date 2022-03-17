@@ -1,0 +1,24 @@
+﻿@page "/Category/category"
+@using EcoWebAss.Services.CategoryService
+@inject ICategory categoryRegistration
+@inject ToastService ToastService
+<Title>Category</Title>
+<Toast></Toast>
+<GroupBox Title="Add New Category" style="margin-top: 1.5rem;">
+	<ValidateForm Model="@categoryCreateDTO" OnValidSubmit=@HandelCreate>
+		<div class="row g-3">
+			<div class="col-12">
+        <BootstrapInput @bind-Value="@categoryCreateDTO.Name" DisplayText="Category Name" PlaceHolder="Category Name"/>
+			</div>
+				<div class="col-12">
+                <Textarea placeholder="Please enter ..." rows="5" @bind-Value="@categoryCreateDTO.Description" DisplayText="Description"></Textarea>
+			</div>
+		</div>
+		 <div class="row g-3">
+      <div class="col-12" style="text-align:center">
+          
+			<Button ButtonType="@ButtonType.Submit" Text="Submit" IsAsync="true" Icon="fa fa-fw fa-fa"/>
+      </div>
+  </div>
+	</ValidateForm>
+</GroupBox>

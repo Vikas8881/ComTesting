@@ -1,5 +1,6 @@
 ﻿using BootstrapBlazor.Components;
 using EcommerceWeb.Services.Base;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using System.Diagnostics.CodeAnalysis;
 
@@ -7,29 +8,27 @@ namespace EcommerceWeb.Pages.Images
 {
     public sealed partial class ProductImage
     {
+        [Parameter]
+        public int ID { get; set; }
+
         [NotNull]
         private Toast? Toast { get; set; }
         private ImageCreateDTO imageCreateDTO = new ImageCreateDTO();
-        private List<ProductReadDTO> productlist { get; set; } = new List<ProductReadDTO>();
+        private List<SP_GetViewimageRecordResult> productlist { get; set; } = new List<SP_GetViewimageRecordResult>();
 
         protected override async Task OnInitializedAsync()
         {
-            var response = await proudctService.GetProduct();
+            var response = await proudctService.GetProductforimage(ID);
             if (response.Success)
             {
-                productlist = response.Data;
+                productlist = response.DataEnum.ToList();
+
             }
         }
-        List<ImageCreateDTO> moreimage = new()
-        {
-
-            new ImageCreateDTO()
-            {
-
-            },
-        };
+      
         private async Task HandelCreate(EditContext context)
         {
+            imageCreateDTO.Pid = ID;
             var response = await pImage.CreateImage(imageCreateDTO);
 
 
@@ -44,6 +43,7 @@ namespace EcommerceWeb.Pages.Images
                 });
             }
         }
+    
         private CancellationTokenSource? ReadAvatarToken { get; set; }
         private static long MaxFileLength => 200 * 1024 * 1024;
         private async Task OnAvatarUpload(UploadFile e)
@@ -53,12 +53,6 @@ namespace EcommerceWeb.Pages.Images
             {
                 var ext = System.IO.Path.GetExtension(file.Name);
                 var format = e.File.ContentType;
-                if (file.Size > MaxFileLength)
-                {
-                    await ToastService.Information("FileMsg", "FileError");
-                    e.Code = 1;
-                    e.Error = "Format Error";
-                }
                 if (CheckValidAvatarFormat(format))
                 {
                     ReadAvatarToken ??= new CancellationTokenSource();
@@ -67,19 +61,16 @@ namespace EcommerceWeb.Pages.Images
                         ReadAvatarToken.Dispose();
                         ReadAvatarToken = new CancellationTokenSource();
                     }
-                    if(file.Size>MaxFileLength)
-                    {
-                        await e.RequestBase64ImageFileAsync(format, 640, 480, MaxFileLength, ReadAvatarToken.Token);
-                        var byteArray = new byte[file.Size];
-                        await file.OpenReadStream().ReadAsync(byteArray);
-                        string imageType = file.ContentType;
-                        string base64String = Convert.ToBase64String(byteArray);
 
-                        imageCreateDTO.ImageData = base64String;
-                        imageCreateDTO.OriginalImageName = file.Name;
-                    }
-                  
-                 }
+                    await e.RequestBase64ImageFileAsync(format, 640, 480, MaxFileLength, ReadAvatarToken.Token);
+                    var byteArray = new byte[file.Size];
+                    await file.OpenReadStream().ReadAsync(byteArray);
+                    string imageType = file.ContentType;
+                    string base64String = Convert.ToBase64String(byteArray);
+
+                    imageCreateDTO.ImageData = base64String;
+                    imageCreateDTO.OriginalImageName = file.Name;
+                }
                 else
                 {
                     e.Code = 1;
@@ -95,6 +86,5 @@ namespace EcommerceWeb.Pages.Images
         {
             return "jpg;png;bmp;gif;jpeg".Split(';').Any(f => format.Contains(f, StringComparison.OrdinalIgnoreCase));
         }
-
     }
 }

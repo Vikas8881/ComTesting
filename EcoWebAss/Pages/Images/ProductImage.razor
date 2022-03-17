@@ -1,0 +1,51 @@
+﻿@page "/Products/Product Images"
+
+@using EcoWebAss.Services.Base
+@using EcoWebAss.Services.CategoryService
+@using EcoWebAss.Services.Images
+@using EcoWebAss.Services.Product
+
+@using Syncfusion.Blazor.DropDowns
+@using Syncfusion.Blazor.Inputs
+@inject IProduct proudctService
+@inject IProductimage pImage
+@inject ToastService ToastService
+
+<Title>Category</Title>
+
+<Toast></Toast>
+<GroupBox Title="Add New Product Image" style="margin-top: 1.5rem;">
+	<ValidateForm Model="@imageCreateDTO" OnValidSubmit=@HandelCreate>
+		   <DataAnnotationsValidator />
+ 
+	<div class="row g-3">
+		<div class="col-6">
+				<div class="row g-3">
+			<div class="col-12">
+         <SfComboBox  TValue="string" Placeholder="Choose Product" TItem="ProductReadDTO" DataSource="@productlist" 
+				 AllowCustom="false" AllowFiltering="true" CssClass="e-outline"
+                 FloatLabelType="@FloatLabelType.Always" @bind-Value="@imageCreateDTO.Pid">
+                <ComboBoxFieldSettings Text="Product_Name" Value="Id"></ComboBoxFieldSettings>
+            </SfComboBox>
+			</div>
+		  
+			<div class="col-4">
+		    <CardUpload  @bind-Value="@imageCreateDTO.Image" IsSingle="true" OnChange="OnAvatarUpload" ShowProgress="true" ShowLabel="true" DisplayText="Choose Images"/> 
+
+			</div>
+			
+	
+		</div>
+		</div>
+	
+	</div>
+	
+		 <div class="row g-3">
+      <div class="col-12" style="text-align:center">
+          <br />
+
+			<Button ButtonType="@ButtonType.Submit" Text="Submit" IsAsync="true" Icon="fa fa-fw fa-fa"/>
+      </div>
+  </div>
+	</ValidateForm>
+</GroupBox>

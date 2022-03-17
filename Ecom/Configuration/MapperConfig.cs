@@ -22,6 +22,7 @@ namespace Ecom.Configuration
             CreateMap<ProductReadDTO, Product>().ReverseMap();
             CreateMap<ProductDetailsDTO, Product>().ReverseMap();
             CreateMap<ProductUpdateDTO, Product>().ReverseMap();
+
             //Image
             CreateMap<ImageCreateDTO, Product_Image>().ReverseMap();
             CreateMap<ImageReadDTO, Product_Image>().ReverseMap();

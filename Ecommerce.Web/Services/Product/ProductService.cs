@@ -61,7 +61,7 @@ namespace EcommerceWeb.Services.Product
             return response;
         }
 
-        public async Task<Response<List<ProductReadDTO>>> GetProduct()
+        public async Task<Response<List<ProductReadDTO>>> GetProducts()
         {
             Response<List<ProductReadDTO>> response;
             try
@@ -118,6 +118,26 @@ namespace EcommerceWeb.Services.Product
             catch (ApiException e)
             {
                 response = ConvertApiException<ProductUpdateDTO>(e);
+            }
+            return response;
+        }
+
+        public async Task<Response<SP_GetViewimageRecordResult>> GetProductforimage(int ID)
+        {
+            Response<SP_GetViewimageRecordResult> response;
+            try
+            {
+                await GetBearerToken();
+                var data = await client.ViewAddImagesAsync(ID);
+                response = new Response<SP_GetViewimageRecordResult>
+                {
+                    DataEnum = data.ToList(),
+                    Success = true
+                };
+            }
+            catch (ApiException e)
+            {
+                response = ConvertApiException<SP_GetViewimageRecordResult>(e);
             }
             return response;
         }

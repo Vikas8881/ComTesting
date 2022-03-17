@@ -1,0 +1,55 @@
+﻿@page "/Products"
+
+@inject IProduct proudctService
+
+<GroupBox Title="Product List" style="margin-top: 1.5rem;">
+	
+    <div style="margin:0px auto 0px; max-width:100%; padding:1px; background-color:rgba(255, 255, 255, 0.46);text-align:center; border-radius:0px 0px 10px 10px" >
+           <div style="background-color:rgba(255, 255, 255, 0.80); border:dashed;padding:10px;border-radius:10px 10px 10px 10px;">
+   
+      <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+
+
+@if(productlist==null)
+{ 
+    <div class="spin-row">
+    <div class="col-6 col-sm-4 col-md-3 col-lg-auto"><Spinner SpinnerType="SpinnerType.Grow" Color="Color.Primary"></Spinner></div>
+    </div>
+}
+else
+{
+    <SfGrid DataSource="@productlist" AllowPaging="true" AllowExcelExport="true" AllowFiltering="true"  AllowTextWrap="true" AllowSorting="true" AllowGrouping="true">
+         <GridPageSettings PageCount="10" PageSizes="true"></GridPageSettings>
+                <GridColumns>
+                    <GridColumn Field=@nameof(ProductReadDTO.Product_Name) HeaderText="Product Name" TextAlign="TextAlign.Left" Width="200px" Visible=true></GridColumn>
+                  
+      <GridColumn Field=@nameof(ProductReadDTO.Product_Description) HeaderText="Description" Width="150"></GridColumn>
+   
+                         <GridColumn HeaderText="Manage" TextAlign="TextAlign.Center" Width="475px"> 
+            <Template Context="data">
+                            @{
+                                  var item = (data as ProductReadDTO); 
+                                  <a href="/Images/Productimage/@item.Id" class="btn btn-info"><span class="oi oi-book"></span> Select</a>
+                                
+                                  //<AuthorizeView Roles="Admin">
+		                          <a href="/patient/Update/@item.Id"  class="btn btn-warning"><span class="oi oi-pencil"></span> Edit</a>
+                                  //</AuthorizeView>
+      
+				                  //<button @onclick=@(()=>Delete(@item.Id))  class="btn btn-danger"> <span class="oi oi-trash"></span>Delete</button>
+                            }
+                </Template>
+                </GridColumn>
+                </GridColumns>
+       
+            </SfGrid>
+
+}
+  <!-- Main content -->
+  </div>
+  </section>
+    </div>
+     </div>
+  
+</GroupBox>

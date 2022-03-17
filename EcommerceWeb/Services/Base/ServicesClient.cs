@@ -1714,8 +1714,14 @@ namespace EcommerceWeb.Services.Base
         [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int Id { get; set; }
 
-        [Newtonsoft.Json.JsonProperty("imageReadDTOs", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<ImageReadDTO> ImageReadDTOs { get; set; }
+        [Newtonsoft.Json.JsonProperty("product_Image1", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Product_Image1 { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("video_Path", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Video_Path { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("pid", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? Pid { get; set; }
 
     }
 
@@ -1849,10 +1855,7 @@ namespace EcommerceWeb.Services.Base
         public int? Quantity { get; set; }
 
         [Newtonsoft.Json.JsonProperty("cat_ID", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int? Cat_ID { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("productReadDTOs", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<ProductReadDTO> ProductReadDTOs { get; set; }
+        public string Cat_ID { get; set; }
 
     }
 
@@ -1875,7 +1878,7 @@ namespace EcommerceWeb.Services.Base
         public int? Quantity { get; set; }
 
         [Newtonsoft.Json.JsonProperty("cat_ID", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int? Cat_ID { get; set; }
+        public string Cat_ID { get; set; }
 
     }
 

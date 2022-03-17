@@ -9,7 +9,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Ecommerce.Data
 {
-    public partial class AppDBContext : IdentityDbContext<ApplicationUser>
+    public partial class AppDBContext : IdentityDbContext<ApplicationUser>  
+
     {
         public AppDBContext()
         {
@@ -33,6 +34,7 @@ namespace Ecommerce.Data
                 entity.Property(e => e.Datetime).HasDefaultValueSql("(getdate())");
             });
 
+            OnModelCreatingGeneratedProcedures(modelBuilder);
             OnModelCreatingPartial(modelBuilder);
         }
 

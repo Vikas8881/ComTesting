@@ -11,7 +11,7 @@ namespace Ecommerce.DTOs.Images
 
         public string? Video { get; set; }
        
-        public string Pid { get; set; }
+        public int? Pid { get; set; }
         public string? ImageData { get; set; }
 
         public string? OriginalImageName { get; set; }

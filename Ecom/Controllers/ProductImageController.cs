@@ -137,7 +137,7 @@ namespace Ecommerce.Controllers
             pimage.Image = CreateFile(ProductImage.ImageData, ProductImage.OriginalImageName);
             _context.Product_Images.Add(pimage);
             await _context.SaveChangesAsync();
-            return CreatedAtAction("GetProductImage", new { id = ProductImage.ID }, ProductImage);
+            return CreatedAtAction("PostProductImage", new { id = ProductImage.ID }, ProductImage);
 
         }
 

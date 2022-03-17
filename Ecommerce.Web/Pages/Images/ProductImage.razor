@@ -1,12 +1,11 @@
-﻿@page "/Products/Product Images"
+﻿@page "/Images/Productimage/{ID:int}"
 
 @using EcommerceWeb.Services.Base
 @using EcommerceWeb.Services.CategoryService
 @using EcommerceWeb.Services.Images
 @using EcommerceWeb.Services.Product
 
-@using Syncfusion.Blazor.DropDowns
-@using Syncfusion.Blazor.Inputs
+
 @inject IProduct proudctService
 @inject IProductimage pImage
 @inject ToastService ToastService
@@ -17,20 +16,24 @@
 <GroupBox Title="Add New Product Image" style="margin-top: 1.5rem;">
 	<ValidateForm Model="@imageCreateDTO" OnValidSubmit=@HandelCreate>
 		   <DataAnnotationsValidator />
- 
+ @if(productlist!=null)
+ {
+	@foreach (var model in productlist)
+	{
+ <BootstrapInput @bind-Value="@model.ProductName" DisplayText="Product Name" PlaceHolder="Product Name" Readonly=true/>
+	}
+	 
+ }
+
 	<div class="row g-3">
 		<div class="col-6">
 				<div class="row g-3">
 			<div class="col-12">
-         <SfComboBox  TValue="string" Placeholder="Choose Product" TItem="ProductReadDTO" DataSource="@productlist" 
-				 AllowCustom="false" AllowFiltering="true" CssClass="e-outline"
-                 FloatLabelType="@FloatLabelType.Always" @bind-Value="@imageCreateDTO.Pid">
-                <ComboBoxFieldSettings Text="Product_Name" Value="Id"></ComboBoxFieldSettings>
-            </SfComboBox>
-			</div>
-		  
+        
+		  </div>
 			<div class="col-4">
-		    <CardUpload  @bind-Value="@imageCreateDTO.Image" IsSingle="true" OnChange="OnAvatarUpload" ShowProgress="true" ShowLabel="true" DisplayText="Choose Images"/> 
+		   
+			<CardUpload  @bind-Value="@imageCreateDTO.Image" IsSingle="true" OnChange="OnAvatarUpload" ShowProgress="true" ShowLabel="true" DisplayText="Choose Images"/> 
 
 			</div>
 			

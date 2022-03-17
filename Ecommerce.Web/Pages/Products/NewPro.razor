@@ -1,10 +1,9 @@
-﻿@page "/Products/newPro/"
+﻿@page "/Add Product"
 
 @using EcommerceWeb.Services.Base
 @using EcommerceWeb.Services.CategoryService
 @using EcommerceWeb.Services.Product
-@using Syncfusion.Blazor.DropDowns
-@using Syncfusion.Blazor.Inputs
+
 @inject IProduct proudctService
 @inject ICategory categoryService
 @inject ToastService ToastService
@@ -37,6 +36,15 @@
 				<div class="col-12">
   <Textarea placeholder="Please enter ..." rows="5" @bind-Value="@productCreateDTO.Product_Description" DisplayText="Description"></Textarea>
 			</div>
+				<div class="col-12">
+			<InputSelect id="department" @bind-Value="@productCreateDTO.Cat_ID" class="form-control">
+      <option value="0">Choose Category</option>
+				@foreach (var cat in categorylist)
+    {
+        <option value="@cat.Id">@cat.Name</option>
+    }
+</InputSelect>
+			</div>
 		</div>
 		</div>
 		<div class="col-6">
@@ -59,14 +67,7 @@
 					<div class=col-12>
 					 <BootstrapInput @bind-Value="@productCreateDTO.Minimum_Stock" DisplayText="Minimum Stock" PlaceHolder="Minimum Stock"/>
 				</div>
-					<div class="col-12">
-			     <SfComboBox  TValue="string" Placeholder="Choose Category" TItem="CategoryReadDTO" DataSource="@categorylist" 
-				 AllowCustom="false" AllowFiltering="true" CssClass="e-outline"
-                 FloatLabelType="@FloatLabelType.Always" @bind-Value="@productCreateDTO.Cat_ID">
-                <ComboBoxFieldSettings Text="Name" Value="Id"></ComboBoxFieldSettings>
-            </SfComboBox>
-			
-			</div>
+				
            </div>
 		</div>
 	</div>

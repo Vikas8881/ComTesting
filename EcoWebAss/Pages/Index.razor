@@ -1,0 +1,37 @@
+﻿@page "/"
+@using Syncfusion.Blazor.Inputs
+@inject IProduct proudctService
+@inject ICategory categoryService
+@inject ToastService ToastService
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+<EditForm Model=@Model>
+	<InputText @bind-Value="@Model.Product_Name" DisplayText="Product Name" PlaceHolder="Product Name"/>
+			<div class="col-12">
+			     <SfComboBox  TValue="string" Placeholder="Choose Category" TItem="CategoryReadDTO" DataSource="@categorylist" 
+				 AllowCustom="false" AllowFiltering="true" CssClass="e-outline"
+                 FloatLabelType="@FloatLabelType.Always" @bind-Value="@Model.Cat_ID">
+                <ComboBoxFieldSettings Text="Name" Value="Id"></ComboBoxFieldSettings>
+            </SfComboBox>
+			
+			</div>
+</EditForm>
+   
+@code{
+	 private ProductCreateDTO Model = new ProductCreateDTO();
+	    private List<CategoryReadDTO> categorylist { get; set; } = new List<CategoryReadDTO>();
+
+        protected override async Task OnInitializedAsync()
+        {
+            var response = await categoryService.GetCategory();
+            if (response.Success)
+            {
+                categorylist = response.Data;
+            }
+        }
+}
